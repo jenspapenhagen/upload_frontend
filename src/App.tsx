@@ -1,11 +1,15 @@
 import { Suspense } from 'react';
 import DragDrop from "./DragDrop";
 
+import "./app.css";
+
 function App() {
 
-  return(
+  return (
     <Suspense fallback={<div>Loading...</div>}>
-      <DragDrop />
+      <div className='center'>
+        <DragDrop />
+      </div>
     </Suspense>
   );
 }
