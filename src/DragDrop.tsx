@@ -11,12 +11,20 @@ function DragDrop() {
   };
 
   const upload = (file: File) => {
-    fetch('localhost:8080/upload', { 
+    const formData = new FormData()
+    formData.append("fileupload", file, file.name);
+
+    fetch('http://localhost:8080/files.html', { 
       method: 'POST',
+      mode: 'no-cors',
+      cache: 'no-cache',
+      credentials: 'omit',
+      referrer: 'no-referrer',
       headers: {
-        "Content-Type": "You will perhaps need to define a content-type here"
+        'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0',
       },
-      body: file // This is your file object
+      body: formData
     }).then(
       response => response.json() // if the response is a JSON object
     ).then(
@@ -34,7 +42,7 @@ function DragDrop() {
   },[file]);
 
   return (
-    <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+    <FileUploader handleChange={handleChange} name="fileupload" types={fileTypes} />
   );
 }
 
