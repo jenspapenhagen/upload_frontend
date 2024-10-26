@@ -5,6 +5,7 @@ RUN npm install
 COPY . ./RUN npm run build
 
 # release step
-FROM nginx:mainline-alpine3.20-slim as releaseCOPY --from=build /app/build /usr/share/nginx/html/
+FROM nginx:mainline-alpine3.20-slim as release
+COPY --from=build /app/build /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
