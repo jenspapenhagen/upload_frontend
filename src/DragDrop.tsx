@@ -16,11 +16,14 @@ function DragDrop() {
     }   
   },[file]);
 
+  //get URL from env
+  const url:string = process.env.API_URL ?? 'http://localhost:8080/files.html';
+
   const upload = (file: File) => {
     const formData = new FormData()
     formData.append("fileupload", file, file.name);
 
-    fetch('http://localhost:8080/files.html', { 
+    fetch(url, { 
       method: 'POST',
       mode: 'no-cors',
       cache: 'no-cache',
