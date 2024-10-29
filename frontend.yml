@@ -4,3 +4,12 @@ services:
     image: upload_frontend:latest
     ports:
       - 80:80/tcp
+    restart: always  
+    healthcheck:
+      test: service nginx status || exit 1
+      interval: 5m
+      timeout: 5s
+      retries: 3
+    env_file:
+    - dev.env
+    #- prod.env  
