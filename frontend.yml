@@ -2,8 +2,8 @@ services:
   frontend:
     container_name: frontend
     image: upload_frontend:latest
-    ports:
-      - 80:80/tcp
+  #  ports:
+  #   - 80:80/tcp
     restart: always  
     healthcheck:
       test: service nginx status || exit 1
