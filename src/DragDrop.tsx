@@ -1,29 +1,27 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 
 const fileTypes = ["JPG", "PDF"];
 
 function DragDrop() {
-  const [file, setFile] = useState<File|null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const handleChange = (file: File) => {
     setFile(file);
   };
-  
-  useEffect(()=> {    
-    if (file) {
-       upload(file);
-    }   
-  },[file]);
+
 
   //get URL from env
-  const url:string = process.env.API_URL ?? 'http://localhost:8080/files.html';
+  const url: string = process.env.API_URL ?? 'http://localhost:8080/files.html';
 
-  const upload = (file: File) => {
+  const upload = useCallback(() => {
     const formData = new FormData()
+    if (!file) {
+      throw new Error("file is not set");
+    }
     formData.append("fileupload", file, file.name);
 
-    fetch(url, { 
+    fetch(url, {
       method: 'POST',
       mode: 'no-cors',
       cache: 'no-cache',
@@ -37,8 +35,14 @@ function DragDrop() {
     }).catch(
       error => console.log(error)
     );
-  };
-  
+  }, [file, url]);
+
+  useEffect(() => {
+    if (file) {
+      upload();
+    }
+  }, [file, upload]);
+
   return (
     <FileUploader handleChange={handleChange} name="fileupload" types={fileTypes} />
   );
