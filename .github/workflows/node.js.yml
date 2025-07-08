@@ -33,7 +33,7 @@ jobs:
       name: build
       with:
         node-version: "22"
-        cache: 'npm-cache'
+        cache: 'npm'
     - run: npm ci --prefer-offline --no-audit
     
     - name: build with NPM
