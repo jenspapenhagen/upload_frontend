@@ -40,3 +40,11 @@ updates:
     commit-message:
       prefix: "deps(gha):"
     open-pull-requests-limit: 10
+ 
+ - package-ecosystem: "docker"
+   directory: "/"
+   schedule:
+      interval: "daily"
+   commit-message:
+      prefix: "deps(gha):"
+   open-pull-requests-limit: 10
