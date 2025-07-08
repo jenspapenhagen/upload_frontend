@@ -36,9 +36,13 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     commit-message:
       prefix: "deps(gha):"
+    groups:
+      actions-deps:
+        patterns:
+          - "*"  
     open-pull-requests-limit: 10
  
  - package-ecosystem: "docker"
