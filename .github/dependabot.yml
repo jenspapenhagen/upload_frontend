@@ -16,7 +16,7 @@ updates:
         patterns:
           - "typescript"
           - "typedoc"
-          - "@types/node"
+          - "@types/*"
       lint:
         patterns:
           - "@types/eslint__js"
@@ -48,7 +48,7 @@ updates:
  - package-ecosystem: "docker"
    directory: "/"
    schedule:
-      interval: "daily"
+      interval: "weekly"
    commit-message:
-      prefix: "deps(gha):"
+      prefix: "deps(docker):"
    open-pull-requests-limit: 10
