@@ -6,24 +6,52 @@ const fileTypes = ["JPG", "PDF"];
 function DragDrop() {
   const [file, setFile] = useState<File | null>(null);
 
-  const handleChange = (file: File) => {
-    setFile(file);
-    if (file) {
-      upload();
+  const handleChange = (file: File | File[]) => {
+    if (!Array.isArray(file)) {
+      setFile(file);
+      if (file) {
+        uploadFile();
+      }
     }
+
   };
 
 
   //get URL from env
   const url: string = process.env.API_URL ?? 'http://localhost:8080/files.html';
 
-  const upload = useCallback(async () => {
-    const formData = new FormData()
-    if(!file) {
+  const uploadFile = useCallback(async () => {
+    if (!file) {
       console.log("file is not set");
       return;
-    } 
-    
+    }
+
+    getPayLoad(file)
+      .catch((error: Error) => {
+        console.log("payload can not be loaded");
+        return Promise.reject(error);
+      })
+      .then((response: Response) => {
+        response.json()
+          .catch((error: Error) => {
+            console.log("payload can not be conv. to JSON");
+            return Promise.reject(error);
+          })
+          .then((data) => {
+            const payload = data?.payload;
+            // validate payload    
+            if (payload) {
+              return payload
+            } else {
+              return Promise.reject(new Error(`No payload in the response`))
+            }
+          })
+      })
+
+  }, [file, url]);
+
+  const getPayLoad = async (file: File): Promise<Response> => {
+    const formData = new FormData();
     formData.append("fileupload", file, file.name);
 
     const response = await fetch(url, {
@@ -39,22 +67,8 @@ function DragDrop() {
       body: formData
     });
 
-    const { data, error } = await response.json();
-
-    if (response.ok) {
-      const payload = data?.payload;
-      if (payload) {
-        // validate payload       
-        return payload
-      } else {
-        return Promise.reject(new Error(`No payload in the response`))
-      }
-    } else {
-      // handle the errors
-      return Promise.reject(error)
-    }
-    
-  }, [file, url]);
+    return response;
+  }
 
   return (
     <FileUploader handleChange={handleChange} name="fileupload" types={fileTypes} data-testid="fileuploader" />
