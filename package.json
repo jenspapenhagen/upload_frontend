@@ -1,7 +1,7 @@
 {
   "name": "upload-frontend",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -29,12 +29,6 @@
     "rollup-plugin-visualizer": "^6.0.3",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.39.0",
-    "vite": "^7.1.0"
-  },
-  "overrides": {
-    "react-drag-drop-files": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    }
+    "vite": "^7.1.1"
   }
 }
