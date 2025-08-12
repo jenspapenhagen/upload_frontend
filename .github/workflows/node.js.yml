@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5.0.0
       name: checkout
 
-    - uses: actions/cache@v4
+    - uses: actions/cache@v4.2.4
       name: Cache NPM dependencies
       id: npm-cache
       with:
@@ -29,7 +29,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-npm-
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v4.4.0
       name: build
       with:
         node-version: "22"
