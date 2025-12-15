@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v6.0.1
       name: checkout
 
-    - uses: actions/cache@v4.3.0
+    - uses: actions/cache@v5.0.1
       name: Cache NPM dependencies
       id: npm-cache
       with:
